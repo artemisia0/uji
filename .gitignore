@@ -2,4 +2,5 @@
 *.interp
 *.env
 *.env.local
+out
 

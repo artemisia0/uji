@@ -1,0 +1,46 @@
+?
+
+main: /								
+	seq  							
+		name: rvalue   
+		<grouped a b c>
+		o a b c  		
+		o					
+			a
+			b
+			c
+		/a b ...other		
+			'OK'  			
+		helloWorld	
+
+helloWorld: / 	
+	print 'Hello, World!'
+
+?
+
+main: /
+{
+	seq
+	{
+		name: rvalue
+		<grouped a b c>
+		o a b c
+		o
+		{
+			a
+			b
+			c
+		}
+		/a b ...other
+		{
+			'OK'
+		}
+		helloWorld
+	}
+}
+
+helloWorld: /
+{
+	print 'Hello, World!'
+}
+
