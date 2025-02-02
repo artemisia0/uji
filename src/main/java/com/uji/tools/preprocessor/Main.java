@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.util.List;
 
 
-// Something like a test...
-
 public class Main {
 	public static void main(String[] args) {
 		if (args.length != 1) {
