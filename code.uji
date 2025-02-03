@@ -1,4 +1,6 @@
-?
+main: /
+ ok
+  1
 
 main: /								
 	seq  							
@@ -7,7 +9,8 @@ main: /
 		o a b c  		
 		o					
 			a
-			b
+			b  ; Comment
+
 			c
 		/a b ...other		
 			'OK'  			
@@ -16,7 +19,7 @@ main: /
 helloWorld: / 	
 	print 'Hello, World!'
 
-?
+?  First line of multiline comment
 
 main: /
 {
@@ -44,3 +47,4 @@ helloWorld: /
 	print 'Hello, World!'
 }
 
+?  Last line of multiline comment

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 // Add tests somewhere somehow also TODO
 
+// Removed multiline comments
 public class PreprocessedCode {
 	private final List<String> inputLines;
 
@@ -22,26 +23,52 @@ public class PreprocessedCode {
 
 	public List<String> lines() {
 		int indentLevel = 0;  // Number of spaces that non-empty line starts with.
+		List<Integer> stack = new ArrayList<>(List.of());
 		List<String> lines = new ArrayList<>(List.of());
+		boolean comment = false;
 		for (String line : this.inputLines) {
+			if (line.length() != 0 && line.charAt(0) == '?') {
+				comment = !comment;
+				continue;
+			}
+			if (comment) {
+				continue;
+			}
 			int currentIndent = this.indentOfLine(line);
 			if (currentIndent == -1) {
 				continue;
 			}
 			if (indentLevel < currentIndent) {
-				lines.add("{");
-			} else if (indentLevel > currentIndent) {
-				lines.add("}");
+				lines.add(" ".repeat(indentLevel) + "{");
+				stack.add(indentLevel);
+				indentLevel = currentIndent;
 			}
-			indentLevel = currentIndent;
+			while (indentLevel > currentIndent) {
+				int stackItem = -1;
+				if (!stack.isEmpty()) {
+					stackItem = stack.get(stack.size() - 1);
+					stack.remove(stack.size() - 1);
+				} else {
+					// no deindent
+					System.out.println("No deindentation at some line :)");
+					break;
+				}
+				indentLevel = stackItem;
+				lines.add(" ".repeat(indentLevel) + "}");
+			}
 			lines.add(line);
+		}
+		while (!stack.isEmpty()) {
+			int stackItem = stack.get(stack.size() - 1);
+			stack.remove(stack.size() - 1);
+			lines.add(" ".repeat(stackItem) + "}");
 		}
 		return lines;
 	}
 
 	// number of spaces line starts with.
 	// if line is empty then -1 is returned.
-	// and yes, it treats one tab to be the same as one space but it is now ok.
+	// tab is treated as four spaces.
 	int indentOfLine(String line) {
 		int level = 0;
 		for (int i = 0; i < line.length(); i += 1) {
@@ -51,7 +78,11 @@ public class PreprocessedCode {
 				&& line.charAt(i) != '\r') {
 				return level;
 			}
-			level += 1;
+			if (line.charAt(i) == ' ') {
+				level += 1;
+			} else if (line.charAt(i) == '\t') {
+				level += 4;
+			}
 		}
 		return -1;
 	}
