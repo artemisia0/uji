@@ -63,6 +63,7 @@ public class PreprocessedCode {
 			stack.remove(stack.size() - 1);
 			lines.add(" ".repeat(stackItem) + "}");
 		}
+		lines.add("");
 		return lines;
 	}
 

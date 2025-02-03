@@ -1,0 +1,25 @@
+some: /
+ status
+  true
+
+main: /								
+	seq  							
+		name: rvalue   
+		<grouped a b c>
+		o a b c  		
+		o					
+			a
+			b  ; Comment
+
+			c
+		/a b ...other		
+			'OK'  			
+		helloWorld	
+
+helloWorld: / 	
+	print 'Hello, World!'
+
+?  First line of multiline comment
+main: /
+?  Last line of multiline comment
+
