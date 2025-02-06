@@ -73,6 +73,9 @@ public class PreprocessedCode {
 	int indentOfLine(String line) {
 		int level = 0;
 		for (int i = 0; i < line.length(); i += 1) {
+			if (line.charAt(i) == ';') {  // Whole line contains comment only.
+				return -1;
+			}
 			if (line.charAt(i) != ' ' 
 				&& line.charAt(i) != '\t'
 				&& line.charAt(i) != '\n'

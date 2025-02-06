@@ -1,9 +1,29 @@
+_:print						; OK
+	sum
+		a
+		b
+
+_:print						; OK
+ sum a b
+
+_:print <sum a b>	; OK
+
+_:print sum a b  	; `sum`, `a`, `b` are treated as `print` arguments.
 
 main: /
 	print
 		'Hello'
 
-main: /ab c
+main: /a b ...other
 	seq
 		print 'Hello, World!'  ; Comment
+
+; <sum 1> is just 1
+main: sum a:sum 1 b:sum 2  					; Ambiguous?
+main: sum a:<sum 1> b:<sum 2>  			; Still ambiguous?
+main: sum <a:sum 1> <b:sum 2>				; Still ambiguous?
+
+; It is just not implemented now (params...)
+print: /...params
+	<__output___ params...>
 
