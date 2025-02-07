@@ -1,5 +1,0 @@
-file: binding*
-binding: name ":" object
-object: def | copy
-def: "/" paramList indent
-
