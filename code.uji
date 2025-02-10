@@ -1,3 +1,8 @@
+_://seq
+	print "Hello, World!"  ; Formatted string (escape sequences work)
+	print 'Hello, World!'  ; Raw string (escape sequences does not work)
+
+?
 _:print						; OK
 	sum
 		a
@@ -26,4 +31,4 @@ main: sum <a:sum 1> <b:sum 2>				; Still ambiguous?
 ; It is just not implemented now (params...)
 print: /...params
 	<__output___ params...>
-
+?

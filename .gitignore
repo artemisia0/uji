@@ -2,7 +2,7 @@
 *.interp
 *.env
 *.env.local
-out
+java_out
 .tmp
 antlr_out
 
