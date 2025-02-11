@@ -1,8 +1,14 @@
+_: /
+	print
+		'Hello, uji!'
+
+_://print'hi'
+
+?
 _://seq
 	print "Hello, World!"  ; Formatted string (escape sequences work)
 	print 'Hello, World!'  ; Raw string (escape sequences does not work)
 
-?
 _:print						; OK
 	sum
 		a

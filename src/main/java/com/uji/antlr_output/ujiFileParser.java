@@ -180,6 +180,8 @@ public class ujiFileParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class UjiMulBindingContext extends ParserRuleContext {
+		public Token key;
+		public UjiMulRvalueContext value;
 		public TerminalNode ID() { return getToken(ujiFileParser.ID, 0); }
 		public UjiMulRvalueContext ujiMulRvalue() {
 			return getRuleContext(UjiMulRvalueContext.class,0);
@@ -202,11 +204,11 @@ public class ujiFileParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(46);
-			match(ID);
+			((UjiMulBindingContext)_localctx).key = match(ID);
 			setState(47);
 			match(T__0);
 			setState(48);
-			ujiMulRvalue();
+			((UjiMulBindingContext)_localctx).value = ujiMulRvalue();
 			}
 		}
 		catch (RecognitionException re) {
@@ -222,6 +224,8 @@ public class ujiFileParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class UjiOneBindingContext extends ParserRuleContext {
+		public Token key;
+		public UjiOneRvalueContext value;
 		public TerminalNode ID() { return getToken(ujiFileParser.ID, 0); }
 		public UjiOneRvalueContext ujiOneRvalue() {
 			return getRuleContext(UjiOneRvalueContext.class,0);
@@ -244,11 +248,11 @@ public class ujiFileParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(50);
-			match(ID);
+			((UjiOneBindingContext)_localctx).key = match(ID);
 			setState(51);
 			match(T__0);
 			setState(52);
-			ujiOneRvalue();
+			((UjiOneBindingContext)_localctx).value = ujiOneRvalue();
 			}
 		}
 		catch (RecognitionException re) {

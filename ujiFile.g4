@@ -5,9 +5,9 @@ ujiFile
 	: (eols? ujiMulBinding eols?)* EOF;
 
 ujiMulBinding
-	: ID ':' ujiMulRvalue;
+	: key=ID ':' value=ujiMulRvalue;
 ujiOneBinding
-	: ID ':' ujiOneRvalue;
+	: key=ID ':' value=ujiOneRvalue;
 
 ujiMulRvalue
 	: ujiMulDef
