@@ -71,11 +71,19 @@ public interface ujiFileVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitUjiDefParams(ujiFileParser.UjiDefParamsContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ujiFileParser#ujiMulCopy}.
+	 * Visit a parse tree produced by the {@code ujiMulCopyMulOption}
+	 * labeled alternative in {@link ujiFileParser#ujiMulCopy}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitUjiMulCopy(ujiFileParser.UjiMulCopyContext ctx);
+	T visitUjiMulCopyMulOption(ujiFileParser.UjiMulCopyMulOptionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ujiMulCopyOneOption}
+	 * labeled alternative in {@link ujiFileParser#ujiMulCopy}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitUjiMulCopyOneOption(ujiFileParser.UjiMulCopyOneOptionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ujiFileParser#ujiOneCopy}.
 	 * @param ctx the parse tree

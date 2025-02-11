@@ -180,8 +180,6 @@ public class ujiFileParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class UjiMulBindingContext extends ParserRuleContext {
-		public Token key;
-		public UjiMulRvalueContext value;
 		public TerminalNode ID() { return getToken(ujiFileParser.ID, 0); }
 		public UjiMulRvalueContext ujiMulRvalue() {
 			return getRuleContext(UjiMulRvalueContext.class,0);
@@ -204,11 +202,11 @@ public class ujiFileParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(46);
-			((UjiMulBindingContext)_localctx).key = match(ID);
+			match(ID);
 			setState(47);
 			match(T__0);
 			setState(48);
-			((UjiMulBindingContext)_localctx).value = ujiMulRvalue();
+			ujiMulRvalue();
 			}
 		}
 		catch (RecognitionException re) {
@@ -224,8 +222,6 @@ public class ujiFileParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class UjiOneBindingContext extends ParserRuleContext {
-		public Token key;
-		public UjiOneRvalueContext value;
 		public TerminalNode ID() { return getToken(ujiFileParser.ID, 0); }
 		public UjiOneRvalueContext ujiOneRvalue() {
 			return getRuleContext(UjiOneRvalueContext.class,0);
@@ -248,11 +244,11 @@ public class ujiFileParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(50);
-			((UjiOneBindingContext)_localctx).key = match(ID);
+			match(ID);
 			setState(51);
 			match(T__0);
 			setState(52);
-			((UjiOneBindingContext)_localctx).value = ujiOneRvalue();
+			ujiOneRvalue();
 			}
 		}
 		catch (RecognitionException re) {
@@ -567,7 +563,6 @@ public class ujiFileParser extends Parser {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				{
 				setState(87);
 				match(T__5);
 				setState(88);
@@ -596,7 +591,6 @@ public class ujiFileParser extends Parser {
 				}
 				setState(99);
 				unindent();
-				}
 				}
 				break;
 			case 2:
@@ -651,7 +645,6 @@ public class ujiFileParser extends Parser {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				{
 				setState(104);
 				match(T__5);
 				setState(105);
@@ -660,7 +653,6 @@ public class ujiFileParser extends Parser {
 				match(T__5);
 				setState(107);
 				ujiMulRvalue();
-				}
 				}
 				break;
 			case 2:
@@ -821,6 +813,30 @@ public class ujiFileParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class UjiMulCopyContext extends ParserRuleContext {
+		public UjiMulCopyContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_ujiMulCopy; }
+	 
+		public UjiMulCopyContext() { }
+		public void copyFrom(UjiMulCopyContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class UjiMulCopyOneOptionContext extends UjiMulCopyContext {
+		public UjiOneCopyContext ujiOneCopy() {
+			return getRuleContext(UjiOneCopyContext.class,0);
+		}
+		public UjiMulCopyOneOptionContext(UjiMulCopyContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ujiFileVisitor ) return ((ujiFileVisitor<? extends T>)visitor).visitUjiMulCopyOneOption(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class UjiMulCopyMulOptionContext extends UjiMulCopyContext {
 		public UjiPrimaryContext ujiPrimary() {
 			return getRuleContext(UjiPrimaryContext.class,0);
 		}
@@ -842,16 +858,10 @@ public class ujiFileParser extends Parser {
 		public EolsContext eols(int i) {
 			return getRuleContext(EolsContext.class,i);
 		}
-		public UjiOneCopyContext ujiOneCopy() {
-			return getRuleContext(UjiOneCopyContext.class,0);
-		}
-		public UjiMulCopyContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_ujiMulCopy; }
+		public UjiMulCopyMulOptionContext(UjiMulCopyContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ujiFileVisitor ) return ((ujiFileVisitor<? extends T>)visitor).visitUjiMulCopy(this);
+			if ( visitor instanceof ujiFileVisitor ) return ((ujiFileVisitor<? extends T>)visitor).visitUjiMulCopyMulOption(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -865,8 +875,8 @@ public class ujiFileParser extends Parser {
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,16,_ctx) ) {
 			case 1:
+				_localctx = new UjiMulCopyMulOptionContext(_localctx);
 				enterOuterAlt(_localctx, 1);
-				{
 				{
 				setState(135);
 				ujiPrimary();
@@ -895,9 +905,9 @@ public class ujiFileParser extends Parser {
 				setState(146);
 				unindent();
 				}
-				}
 				break;
 			case 2:
+				_localctx = new UjiMulCopyOneOptionContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(148);

@@ -10,25 +10,39 @@ public class ASTBuilder implements ujiFileVisitor<ASTNode>  {
 	@Override public ASTNode visitUjiFile(
 		ujiFileParser.UjiFileContext ctx
 	) {
-		// return ASTProgram with 'bindings' set to ArrayList<ASTBinding> ... TODO
-		return new ASTNode(1, 1, 2, 2);
+		List<ASTBinding> bindings = new ArrayList<>();
+		for (int i = 0; i < ctx.ujiMulBinding().size(); i += 1) {
+			ASTNode node = ctx.ujiMulBinding(i).accept(this);
+			if (!(node instanceof ASTBinding)) {
+				assert(false);
+			}
+			bindings.add((ASTBinding)node);
+		}
+		return new ASTProgram(
+			bindings,
+			new ASTNodeFromRuleContext(ctx).value()
+		);
 	}
 
-	@Override public ASTNode visitUjiMulBinding(
-		ujiFileParser.UjiMulBindingContext ctx
+	@Override public ASTNode visitUjiMulCopyMulOption(
+		ujiFileParser.UjiMulCopyMulOptionContext ctx
 	) {
-		// visitChildren(ctx);
-		System.out.println("binding key: " + ctx.key.getText());
-		System.out.println("binding value: " + ctx.value.getText());
-
-		return new ASTNode(1, 1, 2, 2);
+		List<ASTNode> args = new ArrayList<>();
+		for (int i = 1; i < ctx.ujiMulRvalue().size(); i += 1) {
+			args.add(ctx.ujiMulRvalue(i).accept(this));
+		}
+		return new ASTCopy(
+			ctx.ujiPrimary().accept(this),
+			args,
+			new ASTNodeFromRuleContext(ctx).value()
+		);
 	}
 
 	@Override public ASTNode visitUjiOneCopy(
 		ujiFileParser.UjiOneCopyContext ctx
 	) {
 		List<ASTNode> args = new ArrayList<>();
-		for (int i = 1; i < ctx.getChildCount(); i += 1) {
+		for (int i = 1; i < ctx.ujiPrimary().size(); i += 1) {
 			args.add(ctx.ujiPrimary(i).accept(this));
 		}
 		return new ASTCopy(

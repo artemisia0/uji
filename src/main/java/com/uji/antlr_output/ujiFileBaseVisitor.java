@@ -88,7 +88,14 @@ public class ujiFileBaseVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitUjiMulCopy(ujiFileParser.UjiMulCopyContext ctx) { return visitChildren(ctx); }
+	@Override public T visitUjiMulCopyMulOption(ujiFileParser.UjiMulCopyMulOptionContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitUjiMulCopyOneOption(ujiFileParser.UjiMulCopyOneOptionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -5,9 +5,9 @@ ujiFile
 	: (eols? ujiMulBinding eols?)* EOF;
 
 ujiMulBinding
-	: key=ID ':' value=ujiMulRvalue;
+	: ID ':' ujiMulRvalue;
 ujiOneBinding
-	: key=ID ':' value=ujiOneRvalue;
+	: ID ':' ujiOneRvalue;
 
 ujiMulRvalue
 	: ujiMulDef
@@ -23,10 +23,10 @@ ujiPrimary
 	: (ID ':')? (('<' ujiOneRvalue '>') | ujiLiteral | ID) ('.' ID)* '...'?;
 
 ujiMulDef
-	: ('/' ujiDefParams indent ujiMulRvalue (eols ujiMulBinding)* unindent)
+	: '/' ujiDefParams indent ujiMulRvalue (eols ujiMulBinding)* unindent
 	| ujiShortMulDef;
 ujiShortMulDef
-	: ('/' ujiDefParams '/' ujiMulRvalue)
+	: '/' ujiDefParams '/' ujiMulRvalue
 	| ujiOneDef;
 ujiOneDef
 	: '/' ujiDefParams '/' ujiOneRvalue;
@@ -35,8 +35,8 @@ ujiDefParams
 	: ID* ('...' ID)? (ID ':' ujiPrimary)*;
 
 ujiMulCopy
-	: (ujiPrimary indent ujiMulRvalue (eols ujiMulRvalue)* unindent)
-	| ujiOneCopy;
+	: ujiPrimary indent ujiMulRvalue (eols ujiMulRvalue)* unindent # ujiMulCopyMulOption
+	| ujiOneCopy # ujiMulCopyOneOption;
 ujiOneCopy
 	: ujiPrimary+;
 
