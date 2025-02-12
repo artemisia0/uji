@@ -60,14 +60,28 @@ public class ujiFileBaseVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitUjiMulDef(ujiFileParser.UjiMulDefContext ctx) { return visitChildren(ctx); }
+	@Override public T visitUjiMulDefMulOption(ujiFileParser.UjiMulDefMulOptionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitUjiShortMulDef(ujiFileParser.UjiShortMulDefContext ctx) { return visitChildren(ctx); }
+	@Override public T visitUjiMulDefShortOption(ujiFileParser.UjiMulDefShortOptionContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitUjiShortMulDefMulOption(ujiFileParser.UjiShortMulDefMulOptionContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitUjiShortMulDefOneOption(ujiFileParser.UjiShortMulDefOneOptionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

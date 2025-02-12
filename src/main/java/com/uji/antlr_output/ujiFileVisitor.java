@@ -47,17 +47,33 @@ public interface ujiFileVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitUjiPrimary(ujiFileParser.UjiPrimaryContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ujiFileParser#ujiMulDef}.
+	 * Visit a parse tree produced by the {@code ujiMulDefMulOption}
+	 * labeled alternative in {@link ujiFileParser#ujiMulDef}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitUjiMulDef(ujiFileParser.UjiMulDefContext ctx);
+	T visitUjiMulDefMulOption(ujiFileParser.UjiMulDefMulOptionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ujiFileParser#ujiShortMulDef}.
+	 * Visit a parse tree produced by the {@code ujiMulDefShortOption}
+	 * labeled alternative in {@link ujiFileParser#ujiMulDef}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitUjiShortMulDef(ujiFileParser.UjiShortMulDefContext ctx);
+	T visitUjiMulDefShortOption(ujiFileParser.UjiMulDefShortOptionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ujiShortMulDefMulOption}
+	 * labeled alternative in {@link ujiFileParser#ujiShortMulDef}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitUjiShortMulDefMulOption(ujiFileParser.UjiShortMulDefMulOptionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ujiShortMulDefOneOption}
+	 * labeled alternative in {@link ujiFileParser#ujiShortMulDef}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitUjiShortMulDefOneOption(ujiFileParser.UjiShortMulDefOneOptionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ujiFileParser#ujiOneDef}.
 	 * @param ctx the parse tree

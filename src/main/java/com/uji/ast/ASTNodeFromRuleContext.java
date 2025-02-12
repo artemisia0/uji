@@ -16,12 +16,10 @@ public class ASTNodeFromRuleContext {
 		Token start = ctx.getStart();
 		Token stop = ctx.getStop();
 
-		return new ASTNode(
-			start.getLine(),
-			stop.getLine(),
-			start.getCharPositionInLine(),
-			stop.getCharPositionInLine() + stop.getText().length()
-		);
+		return new ASTNodeFromTwoTokens(
+			start,
+			stop
+		).value();
 	}
 }
 

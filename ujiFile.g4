@@ -15,24 +15,24 @@ ujiMulRvalue
 	| ujiMulBinding
 	| ujiOneRvalue;
 ujiOneRvalue
-	: ujiOneDef
-	| ujiOneCopy
-	| ujiOneBinding;
+	: ujiOneDef # ujiOneRvalueOneDefOption
+	| ujiOneCopy # ujiOneRvalueOneCopyOption
+	| ujiOneBinding # ujiOneRvalueOneBindingOption ;
 
 ujiPrimary
-	: (ID ':')? (('<' ujiOneRvalue '>') | ujiLiteral | ID) ('.' ID)* '...'?;
+	: (key=ID ':')? (('<' primaryRvalue=ujiOneRvalue '>') | primaryLiteral=ujiLiteral | primaryKey=ID) ('.' attrs+=ID)* packed='...'?;
 
 ujiMulDef
-	: '/' ujiDefParams indent ujiMulRvalue (eols ujiMulBinding)* unindent
-	| ujiShortMulDef;
+	: '/' ujiDefParams indent ujiMulRvalue (eols ujiMulBinding)* unindent # ujiMulDefMulOption
+	| ujiShortMulDef # ujiMulDefShortOption;
 ujiShortMulDef
-	: '/' ujiDefParams '/' ujiMulRvalue
-	| ujiOneDef;
+	: '/' ujiDefParams '/' ujiMulRvalue # ujiShortMulDefMulOption
+	| ujiOneDef # ujiShortMulDefOneOption;
 ujiOneDef
 	: '/' ujiDefParams '/' ujiOneRvalue;
 
 ujiDefParams
-	: ID* ('...' ID)? (ID ':' ujiPrimary)*;
+	: keys+=ID* ('...' packedKey=ID)? (bindingKeys+=ID ':' bindingObjects+=ujiPrimary)*;
 
 ujiMulCopy
 	: ujiPrimary indent ujiMulRvalue (eols ujiMulRvalue)* unindent # ujiMulCopyMulOption

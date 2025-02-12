@@ -400,6 +400,13 @@ public class ujiFileParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class UjiPrimaryContext extends ParserRuleContext {
+		public Token key;
+		public UjiOneRvalueContext primaryRvalue;
+		public UjiLiteralContext primaryLiteral;
+		public Token primaryKey;
+		public Token ID;
+		public List<Token> attrs = new ArrayList<Token>();
+		public Token packed;
 		public UjiLiteralContext ujiLiteral() {
 			return getRuleContext(UjiLiteralContext.class,0);
 		}
@@ -434,7 +441,7 @@ public class ujiFileParser extends Parser {
 			case 1:
 				{
 				setState(65);
-				match(ID);
+				((UjiPrimaryContext)_localctx).key = match(ID);
 				setState(66);
 				match(T__0);
 				}
@@ -449,7 +456,7 @@ public class ujiFileParser extends Parser {
 				setState(69);
 				match(T__1);
 				setState(70);
-				ujiOneRvalue();
+				((UjiPrimaryContext)_localctx).primaryRvalue = ujiOneRvalue();
 				setState(71);
 				match(T__2);
 				}
@@ -461,13 +468,13 @@ public class ujiFileParser extends Parser {
 			case FLOAT:
 				{
 				setState(73);
-				ujiLiteral();
+				((UjiPrimaryContext)_localctx).primaryLiteral = ujiLiteral();
 				}
 				break;
 			case ID:
 				{
 				setState(74);
-				match(ID);
+				((UjiPrimaryContext)_localctx).primaryKey = match(ID);
 				}
 				break;
 			default:
@@ -482,7 +489,8 @@ public class ujiFileParser extends Parser {
 				setState(77);
 				match(T__3);
 				setState(78);
-				match(ID);
+				((UjiPrimaryContext)_localctx).ID = match(ID);
+				((UjiPrimaryContext)_localctx).attrs.add(((UjiPrimaryContext)_localctx).ID);
 				}
 				}
 				setState(83);
@@ -495,7 +503,7 @@ public class ujiFileParser extends Parser {
 			if (_la==T__4) {
 				{
 				setState(84);
-				match(T__4);
+				((UjiPrimaryContext)_localctx).packed = match(T__4);
 				}
 			}
 
@@ -514,6 +522,18 @@ public class ujiFileParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class UjiMulDefContext extends ParserRuleContext {
+		public UjiMulDefContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_ujiMulDef; }
+	 
+		public UjiMulDefContext() { }
+		public void copyFrom(UjiMulDefContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class UjiMulDefMulOptionContext extends UjiMulDefContext {
 		public UjiDefParamsContext ujiDefParams() {
 			return getRuleContext(UjiDefParamsContext.class,0);
 		}
@@ -538,16 +558,22 @@ public class ujiFileParser extends Parser {
 		public UjiMulBindingContext ujiMulBinding(int i) {
 			return getRuleContext(UjiMulBindingContext.class,i);
 		}
+		public UjiMulDefMulOptionContext(UjiMulDefContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ujiFileVisitor ) return ((ujiFileVisitor<? extends T>)visitor).visitUjiMulDefMulOption(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class UjiMulDefShortOptionContext extends UjiMulDefContext {
 		public UjiShortMulDefContext ujiShortMulDef() {
 			return getRuleContext(UjiShortMulDefContext.class,0);
 		}
-		public UjiMulDefContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_ujiMulDef; }
+		public UjiMulDefShortOptionContext(UjiMulDefContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ujiFileVisitor ) return ((ujiFileVisitor<? extends T>)visitor).visitUjiMulDef(this);
+			if ( visitor instanceof ujiFileVisitor ) return ((ujiFileVisitor<? extends T>)visitor).visitUjiMulDefShortOption(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -561,6 +587,7 @@ public class ujiFileParser extends Parser {
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,10,_ctx) ) {
 			case 1:
+				_localctx = new UjiMulDefMulOptionContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(87);
@@ -594,6 +621,7 @@ public class ujiFileParser extends Parser {
 				}
 				break;
 			case 2:
+				_localctx = new UjiMulDefShortOptionContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(101);
@@ -615,22 +643,40 @@ public class ujiFileParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class UjiShortMulDefContext extends ParserRuleContext {
+		public UjiShortMulDefContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_ujiShortMulDef; }
+	 
+		public UjiShortMulDefContext() { }
+		public void copyFrom(UjiShortMulDefContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class UjiShortMulDefMulOptionContext extends UjiShortMulDefContext {
 		public UjiDefParamsContext ujiDefParams() {
 			return getRuleContext(UjiDefParamsContext.class,0);
 		}
 		public UjiMulRvalueContext ujiMulRvalue() {
 			return getRuleContext(UjiMulRvalueContext.class,0);
 		}
+		public UjiShortMulDefMulOptionContext(UjiShortMulDefContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ujiFileVisitor ) return ((ujiFileVisitor<? extends T>)visitor).visitUjiShortMulDefMulOption(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class UjiShortMulDefOneOptionContext extends UjiShortMulDefContext {
 		public UjiOneDefContext ujiOneDef() {
 			return getRuleContext(UjiOneDefContext.class,0);
 		}
-		public UjiShortMulDefContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_ujiShortMulDef; }
+		public UjiShortMulDefOneOptionContext(UjiShortMulDefContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ujiFileVisitor ) return ((ujiFileVisitor<? extends T>)visitor).visitUjiShortMulDef(this);
+			if ( visitor instanceof ujiFileVisitor ) return ((ujiFileVisitor<? extends T>)visitor).visitUjiShortMulDefOneOption(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -643,6 +689,7 @@ public class ujiFileParser extends Parser {
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,11,_ctx) ) {
 			case 1:
+				_localctx = new UjiShortMulDefMulOptionContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(104);
@@ -656,6 +703,7 @@ public class ujiFileParser extends Parser {
 				}
 				break;
 			case 2:
+				_localctx = new UjiShortMulDefOneOptionContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(109);
@@ -723,6 +771,12 @@ public class ujiFileParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class UjiDefParamsContext extends ParserRuleContext {
+		public Token ID;
+		public List<Token> keys = new ArrayList<Token>();
+		public Token packedKey;
+		public List<Token> bindingKeys = new ArrayList<Token>();
+		public UjiPrimaryContext ujiPrimary;
+		public List<UjiPrimaryContext> bindingObjects = new ArrayList<UjiPrimaryContext>();
 		public List<TerminalNode> ID() { return getTokens(ujiFileParser.ID); }
 		public TerminalNode ID(int i) {
 			return getToken(ujiFileParser.ID, i);
@@ -760,7 +814,8 @@ public class ujiFileParser extends Parser {
 					{
 					{
 					setState(117);
-					match(ID);
+					((UjiDefParamsContext)_localctx).ID = match(ID);
+					((UjiDefParamsContext)_localctx).keys.add(((UjiDefParamsContext)_localctx).ID);
 					}
 					} 
 				}
@@ -776,7 +831,7 @@ public class ujiFileParser extends Parser {
 				setState(123);
 				match(T__4);
 				setState(124);
-				match(ID);
+				((UjiDefParamsContext)_localctx).packedKey = match(ID);
 				}
 			}
 
@@ -787,11 +842,13 @@ public class ujiFileParser extends Parser {
 				{
 				{
 				setState(127);
-				match(ID);
+				((UjiDefParamsContext)_localctx).ID = match(ID);
+				((UjiDefParamsContext)_localctx).bindingKeys.add(((UjiDefParamsContext)_localctx).ID);
 				setState(128);
 				match(T__0);
 				setState(129);
-				ujiPrimary();
+				((UjiDefParamsContext)_localctx).ujiPrimary = ujiPrimary();
+				((UjiDefParamsContext)_localctx).bindingObjects.add(((UjiDefParamsContext)_localctx).ujiPrimary);
 				}
 				}
 				setState(134);
