@@ -39,14 +39,49 @@ public class ujiFileBaseVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitUjiMulRvalue(ujiFileParser.UjiMulRvalueContext ctx) { return visitChildren(ctx); }
+	@Override public T visitUjiMulRvalueMulDefOption(ujiFileParser.UjiMulRvalueMulDefOptionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitUjiOneRvalue(ujiFileParser.UjiOneRvalueContext ctx) { return visitChildren(ctx); }
+	@Override public T visitUjiMulRvalueMulCopyOption(ujiFileParser.UjiMulRvalueMulCopyOptionContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitUjiMulRvalueMulBindingOption(ujiFileParser.UjiMulRvalueMulBindingOptionContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitUjiMulRvalueOneRvalueOption(ujiFileParser.UjiMulRvalueOneRvalueOptionContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitUjiOneRvalueOneDefOption(ujiFileParser.UjiOneRvalueOneDefOptionContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitUjiOneRvalueOneCopyOption(ujiFileParser.UjiOneRvalueOneCopyOptionContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitUjiOneRvalueOneBindingOption(ujiFileParser.UjiOneRvalueOneBindingOptionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

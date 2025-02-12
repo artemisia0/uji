@@ -10,10 +10,10 @@ ujiOneBinding
 	: ID ':' ujiOneRvalue;
 
 ujiMulRvalue
-	: ujiMulDef
-	| ujiMulCopy
-	| ujiMulBinding
-	| ujiOneRvalue;
+	: ujiMulDef # ujiMulRvalueMulDefOption
+	| ujiMulCopy # ujiMulRvalueMulCopyOption
+	| ujiMulBinding # ujiMulRvalueMulBindingOption
+	| ujiOneRvalue # ujiMulRvalueOneRvalueOption ;
 ujiOneRvalue
 	: ujiOneDef # ujiOneRvalueOneDefOption
 	| ujiOneCopy # ujiOneRvalueOneCopyOption

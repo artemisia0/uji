@@ -21,10 +21,7 @@ public class Main {
 		CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
 		ujiFileParser parser = new ujiFileParser(commonTokenStream);
 
-		ujiFileParser.UjiFileContext context = parser.ujiFile();
-
-		ASTBuilder astBuilder = new ASTBuilder();
-		System.out.println(astBuilder.visitUjiFile(context));
+		System.out.println(new ASTBuilder().visitUjiFile(parser.ujiFile()));
 	}
 }
 

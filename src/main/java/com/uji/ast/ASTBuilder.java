@@ -4,12 +4,23 @@ import com.uji.antlr_output.*;
 import com.uji.util.ProcessedFmtString;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.tree.ErrorNode;
+import org.antlr.v4.runtime.tree.TerminalNode;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 
-public class ASTBuilder implements ujiFileVisitor<ASTNode>  {
+public class ASTBuilder extends ujiFileBaseVisitor<ASTNode>  {
+
+	// NOTE: this method was generated with chatgpt and is to be removed later.
+	@Override public ASTNode visitErrorNode(ErrorNode node) {
+			Token token = node.getSymbol();
+			System.err.println("🚨 Error at line " + token.getLine() + ":" + token.getCharPositionInLine());
+			System.err.println("🔹 Offending token: " + token.getText());
+			return null;
+	}
+
 	@Override public ASTNode visitUjiFile(
 		ujiFileParser.UjiFileContext ctx
 	) {
@@ -25,6 +36,68 @@ public class ASTBuilder implements ujiFileVisitor<ASTNode>  {
 			bindings,
 			new ASTNodeFromRuleContext(ctx).value()
 		);
+	}
+
+	@Override public ASTNode visitUjiMulBinding(
+		ujiFileParser.UjiMulBindingContext ctx
+	) {
+		return new ASTBinding(
+			ctx.ID().getText(),
+			ctx.ujiMulRvalue().accept(this),
+			new ASTNodeFromRuleContext(ctx).value()
+		);
+	}
+
+	@Override public ASTNode visitUjiOneBinding(
+		ujiFileParser.UjiOneBindingContext ctx
+	) {
+		return new ASTBinding(
+			ctx.ID().getText(),
+			ctx.ujiOneRvalue().accept(this),
+			new ASTNodeFromRuleContext(ctx).value()
+		);
+	}
+
+	@Override public ASTNode visitUjiMulRvalueMulDefOption(
+		ujiFileParser.UjiMulRvalueMulDefOptionContext ctx
+	) {
+		return ctx.ujiMulDef().accept(this);
+	}
+
+	@Override public ASTNode visitUjiMulRvalueMulCopyOption(
+		ujiFileParser.UjiMulRvalueMulCopyOptionContext ctx
+	) {
+		return ctx.ujiMulCopy().accept(this);
+	}
+
+	@Override public ASTNode visitUjiMulRvalueMulBindingOption(
+		ujiFileParser.UjiMulRvalueMulBindingOptionContext ctx
+	) {
+		return ctx.ujiMulBinding().accept(this);
+	}
+
+	@Override public ASTNode visitUjiMulRvalueOneRvalueOption(
+		ujiFileParser.UjiMulRvalueOneRvalueOptionContext ctx
+	) {
+		return ctx.ujiOneRvalue().accept(this);
+	}
+
+	@Override public ASTNode visitUjiOneRvalueOneBindingOption(
+		ujiFileParser.UjiOneRvalueOneBindingOptionContext ctx
+	) {
+		return ctx.ujiOneBinding().accept(this);
+	}
+
+	@Override public ASTNode visitUjiOneRvalueOneCopyOption(
+		ujiFileParser.UjiOneRvalueOneCopyOptionContext ctx
+	) {
+		return ctx.ujiOneCopy().accept(this);
+	}
+
+	@Override public ASTNode visitUjiOneRvalueOneDefOption(
+		ujiFileParser.UjiOneRvalueOneDefOptionContext ctx
+	) {
+		return ctx.ujiOneDef().accept(this);
 	}
 
 	@Override public ASTNode visitUjiPrimary(
@@ -67,8 +140,10 @@ public class ASTBuilder implements ujiFileVisitor<ASTNode>  {
 			stopToken = ctx.packed;
 		} else if (ctx.attrs.size() != 0) {
 			stopToken = ctx.attrs.get(ctx.attrs.size()-1);
-		} else {
+		} else if (primaryObjectCtx != null) {
 			stopToken = primaryObjectCtx.getStop();
+		} else {
+			stopToken = primaryObjectToken;
 		}
 
 		// Creating ASTObject which represents object to be possibly binded
@@ -176,7 +251,7 @@ public class ASTBuilder implements ujiFileVisitor<ASTNode>  {
 
 		return new ASTDefParams(
 			ctx.keys.stream().map(t -> t.getText()).collect(Collectors.toList()),
-			ctx.packedKey.getText(),
+			(ctx.packedKey == null ? "" : ctx.packedKey.getText()),
 			bindings,
 			new ASTNodeFromRuleContext(ctx).value()
 		);

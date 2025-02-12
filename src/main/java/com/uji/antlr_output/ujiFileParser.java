@@ -264,25 +264,61 @@ public class ujiFileParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class UjiMulRvalueContext extends ParserRuleContext {
-		public UjiMulDefContext ujiMulDef() {
-			return getRuleContext(UjiMulDefContext.class,0);
-		}
-		public UjiMulCopyContext ujiMulCopy() {
-			return getRuleContext(UjiMulCopyContext.class,0);
-		}
-		public UjiMulBindingContext ujiMulBinding() {
-			return getRuleContext(UjiMulBindingContext.class,0);
-		}
-		public UjiOneRvalueContext ujiOneRvalue() {
-			return getRuleContext(UjiOneRvalueContext.class,0);
-		}
 		public UjiMulRvalueContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_ujiMulRvalue; }
+	 
+		public UjiMulRvalueContext() { }
+		public void copyFrom(UjiMulRvalueContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class UjiMulRvalueMulBindingOptionContext extends UjiMulRvalueContext {
+		public UjiMulBindingContext ujiMulBinding() {
+			return getRuleContext(UjiMulBindingContext.class,0);
+		}
+		public UjiMulRvalueMulBindingOptionContext(UjiMulRvalueContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ujiFileVisitor ) return ((ujiFileVisitor<? extends T>)visitor).visitUjiMulRvalue(this);
+			if ( visitor instanceof ujiFileVisitor ) return ((ujiFileVisitor<? extends T>)visitor).visitUjiMulRvalueMulBindingOption(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class UjiMulRvalueOneRvalueOptionContext extends UjiMulRvalueContext {
+		public UjiOneRvalueContext ujiOneRvalue() {
+			return getRuleContext(UjiOneRvalueContext.class,0);
+		}
+		public UjiMulRvalueOneRvalueOptionContext(UjiMulRvalueContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ujiFileVisitor ) return ((ujiFileVisitor<? extends T>)visitor).visitUjiMulRvalueOneRvalueOption(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class UjiMulRvalueMulCopyOptionContext extends UjiMulRvalueContext {
+		public UjiMulCopyContext ujiMulCopy() {
+			return getRuleContext(UjiMulCopyContext.class,0);
+		}
+		public UjiMulRvalueMulCopyOptionContext(UjiMulRvalueContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ujiFileVisitor ) return ((ujiFileVisitor<? extends T>)visitor).visitUjiMulRvalueMulCopyOption(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class UjiMulRvalueMulDefOptionContext extends UjiMulRvalueContext {
+		public UjiMulDefContext ujiMulDef() {
+			return getRuleContext(UjiMulDefContext.class,0);
+		}
+		public UjiMulRvalueMulDefOptionContext(UjiMulRvalueContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ujiFileVisitor ) return ((ujiFileVisitor<? extends T>)visitor).visitUjiMulRvalueMulDefOption(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -295,6 +331,7 @@ public class ujiFileParser extends Parser {
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
 			case 1:
+				_localctx = new UjiMulRvalueMulDefOptionContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(54);
@@ -302,6 +339,7 @@ public class ujiFileParser extends Parser {
 				}
 				break;
 			case 2:
+				_localctx = new UjiMulRvalueMulCopyOptionContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(55);
@@ -309,6 +347,7 @@ public class ujiFileParser extends Parser {
 				}
 				break;
 			case 3:
+				_localctx = new UjiMulRvalueMulBindingOptionContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(56);
@@ -316,6 +355,7 @@ public class ujiFileParser extends Parser {
 				}
 				break;
 			case 4:
+				_localctx = new UjiMulRvalueOneRvalueOptionContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(57);
@@ -337,22 +377,49 @@ public class ujiFileParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class UjiOneRvalueContext extends ParserRuleContext {
-		public UjiOneDefContext ujiOneDef() {
-			return getRuleContext(UjiOneDefContext.class,0);
-		}
-		public UjiOneCopyContext ujiOneCopy() {
-			return getRuleContext(UjiOneCopyContext.class,0);
-		}
-		public UjiOneBindingContext ujiOneBinding() {
-			return getRuleContext(UjiOneBindingContext.class,0);
-		}
 		public UjiOneRvalueContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_ujiOneRvalue; }
+	 
+		public UjiOneRvalueContext() { }
+		public void copyFrom(UjiOneRvalueContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class UjiOneRvalueOneBindingOptionContext extends UjiOneRvalueContext {
+		public UjiOneBindingContext ujiOneBinding() {
+			return getRuleContext(UjiOneBindingContext.class,0);
+		}
+		public UjiOneRvalueOneBindingOptionContext(UjiOneRvalueContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ujiFileVisitor ) return ((ujiFileVisitor<? extends T>)visitor).visitUjiOneRvalue(this);
+			if ( visitor instanceof ujiFileVisitor ) return ((ujiFileVisitor<? extends T>)visitor).visitUjiOneRvalueOneBindingOption(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class UjiOneRvalueOneDefOptionContext extends UjiOneRvalueContext {
+		public UjiOneDefContext ujiOneDef() {
+			return getRuleContext(UjiOneDefContext.class,0);
+		}
+		public UjiOneRvalueOneDefOptionContext(UjiOneRvalueContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ujiFileVisitor ) return ((ujiFileVisitor<? extends T>)visitor).visitUjiOneRvalueOneDefOption(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class UjiOneRvalueOneCopyOptionContext extends UjiOneRvalueContext {
+		public UjiOneCopyContext ujiOneCopy() {
+			return getRuleContext(UjiOneCopyContext.class,0);
+		}
+		public UjiOneRvalueOneCopyOptionContext(UjiOneRvalueContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ujiFileVisitor ) return ((ujiFileVisitor<? extends T>)visitor).visitUjiOneRvalueOneCopyOption(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -365,6 +432,7 @@ public class ujiFileParser extends Parser {
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
 			case 1:
+				_localctx = new UjiOneRvalueOneDefOptionContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(60);
@@ -372,6 +440,7 @@ public class ujiFileParser extends Parser {
 				}
 				break;
 			case 2:
+				_localctx = new UjiOneRvalueOneCopyOptionContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(61);
@@ -379,6 +448,7 @@ public class ujiFileParser extends Parser {
 				}
 				break;
 			case 3:
+				_localctx = new UjiOneRvalueOneBindingOptionContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(62);
