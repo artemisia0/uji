@@ -1,40 +1,11 @@
-_: /
+_: /  ; some code
 	print
 		'Hello, uji!'
 
-_://print'hi'
+_://print 'hi'
 
-?
-_://seq
-	print "Hello, World!"  ; Formatted string (escape sequences work)
-	print 'Hello, World!'  ; Raw string (escape sequences does not work)
+										; one line comment
+? and this
+COments 
+? this is also
 
-_:print						; OK
-	sum
-		a
-		b
-
-_:print						; OK
- sum a b
-
-_:print <sum a b>	; OK
-
-_:print sum a b  	; `sum`, `a`, `b` are treated as `print` arguments.
-
-main: /
-	print
-		'Hello'
-
-main: /a b ...other
-	seq
-		print 'Hello, World!'  ; Comment
-
-; <sum 1> is just 1
-main: sum a:sum 1 b:sum 2  					; Ambiguous?
-main: sum a:<sum 1> b:<sum 2>  			; Still ambiguous?
-main: sum <a:sum 1> <b:sum 2>				; Still ambiguous?
-
-; It is just not implemented now (params...)
-print: /...params
-	<__output___ params...>
-?

@@ -1,6 +1,6 @@
 package com.uji.ast;
 
-import com.uji.antlr_output.*;
+import com.uji.antlr.*;
 import com.uji.util.ProcessedFmtString;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.ParserRuleContext;

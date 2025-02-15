@@ -1,10 +1,6 @@
-*.class
-*.interp
 *.env
 *.env.local
-java_out
-.tmp
-antlr_out
-src/main/java/com/uji/antlr_output
-src/main/java/com/uji/antlr_output/*
+antlr*jar
+src/main/java/com/uji/antlr/*
+target
 
