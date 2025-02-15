@@ -1,11 +1,4 @@
-_: /  ; some code
+_: /
 	print
-		'Hello, uji!'
-
-_://print 'hi'
-
-										; one line comment
-? and this
-COments 
-? this is also
+		'Hello, uji!'  ; For some reason this is not present in AST but must be...
 

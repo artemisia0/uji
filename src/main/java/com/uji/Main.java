@@ -9,6 +9,9 @@ import com.uji.ast.ASTBuilder;
 import com.uji.antlr.ujiFileParser;
 import com.uji.antlr.ujiFileLexer;
 import com.uji.preprocessedCode.PreprocessedCodeAsString;
+import com.uji.ast.misc.JSONFromAST;
+import com.uji.ast.ASTNode;
+import com.uji.misc.jsonvisualizer.JSONVisualizer;
 
 
 public class Main {
@@ -24,7 +27,10 @@ public class Main {
 		CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
 		ujiFileParser parser = new ujiFileParser(commonTokenStream);
 
-		System.out.println(new ASTBuilder().visitUjiFile(parser.ujiFile()));
+		ASTNode root = new ASTBuilder().visitUjiFile(parser.ujiFile());
+		String json = new JSONFromAST(root).value();
+		System.out.println(json);
+		new JSONVisualizer(json).visualize();
 	}
 }
 
