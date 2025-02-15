@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 import com.uji.ast.ASTBuilder;
 import com.uji.antlr.ujiFileParser;
 import com.uji.antlr.ujiFileLexer;
-// import PreprocessedCode class and USE IT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+import com.uji.preprocessedCode.PreprocessedCodeAsString;
 
 
 public class Main {
@@ -18,7 +18,7 @@ public class Main {
 			return;
 		}
 		String code = new String(Files.readAllBytes(Paths.get(args[0])));
-		// code = new PreprocessedCode(code).value() or so... 			TODO FIXME
+		code = new PreprocessedCodeAsString(code).value();
 		CharStream inputStream = CharStreams.fromString(code);
 		ujiFileLexer lexer = new ujiFileLexer(inputStream);
 		CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);

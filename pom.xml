@@ -6,6 +6,7 @@
   <groupId>com.uji</groupId>
   <artifactId>uji</artifactId>
   <version>1.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
   <name>uji</name>
   <url>https://github.com/artemisia0/uji</url>
