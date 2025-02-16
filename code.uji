@@ -1,4 +1,2 @@
-_: /
-	print
-		'Hello, uji!'  ; For some reason this is not present in AST but must be...
+_://print'Hello, uji!'
 

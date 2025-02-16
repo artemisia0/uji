@@ -100,61 +100,45 @@ public class ASTBuilder extends ujiFileBaseVisitor<ASTNode>  {
 		return ctx.ujiOneDef().accept(this);
 	}
 
+	@Override public ASTNode visitUjiPrimaryBaseRvalueOption(
+		ujiFileParser.UjiPrimaryBaseRvalueOptionContext ctx
+	) {
+		return ctx.rvalue.accept(this);
+	}
+
+	@Override public ASTNode visitUjiPrimaryBaseLiteralOption(
+		ujiFileParser.UjiPrimaryBaseLiteralOptionContext ctx
+	) {
+		return ctx.literal.accept(this);
+	}
+
+	@Override public ASTNode visitUjiPrimaryBaseKeyOption(
+		ujiFileParser.UjiPrimaryBaseKeyOptionContext ctx
+	) {
+		return new ASTKey(
+			ctx.key.getText(),
+			new ASTNodeFromTwoTokens(
+				ctx.key,
+				ctx.key
+			).value()
+		);
+	}
+
 	@Override public ASTNode visitUjiPrimary(
 		ujiFileParser.UjiPrimaryContext ctx
 	) {
-		// Base object alternatives processing
-		ASTNode primaryObject = null;
-		Token primaryObjectToken = null;
-		ParserRuleContext primaryObjectCtx = null;
-		if (ctx.primaryRvalue != null) {
-			primaryObjectCtx = ctx.primaryRvalue;
-			primaryObject = primaryObjectCtx.accept(this);
-		} else if (ctx.primaryLiteral != null) {
-			primaryObjectCtx = ctx.primaryLiteral;
-			primaryObject = primaryObjectCtx.accept(this);
-		} else if (ctx.primaryKey != null) {
-			primaryObjectToken = ctx.primaryKey;
-			primaryObject = new ASTKey(
-				primaryObjectToken.getText(),
-				new ASTNodeFromTwoTokens(
-					primaryObjectToken,
-					primaryObjectToken
-				).value()
-			);
-		}
-		assert(primaryObject != null);
-
-		// Calculating start token for base object
-		Token startToken = null;
-		if (primaryObjectCtx != null) {
-			startToken = primaryObjectCtx.getStart();
-		} else {
-			assert(primaryObjectToken != null);
-			startToken = primaryObjectToken;
-		}
-
-		// Calculating stop token for whole expression (ujiPrimary)
-		Token stopToken = null;
-		if (ctx.packed != null) {
-			stopToken = ctx.packed;
-		} else if (ctx.attrs.size() != 0) {
-			stopToken = ctx.attrs.get(ctx.attrs.size()-1);
-		} else if (primaryObjectCtx != null) {
-			stopToken = primaryObjectCtx.getStop();
-		} else {
-			stopToken = primaryObjectToken;
-		}
+		var baseCtx = ctx.ujiPrimaryBase();
+		ASTNode baseNode = baseCtx.accept(this);
 
 		// Creating ASTObject which represents object to be possibly binded
 		ASTObject object = new ASTObject(
-			primaryObject,
+			baseNode,
 			ctx.attrs.stream().map(a -> a.getText()).collect(Collectors.toList()),
 			ctx.packed != null,
-			new ASTNodeFromTwoTokens(startToken, stopToken).value()
+			new ASTNodeFromTwoRuleContexts(baseCtx, ctx).value()
 		);
 
-		// If object is to be binded then returhing ASTBinding
+		// If object is to be binded then returning ASTBinding
 		if (ctx.key != null) {
 			return new ASTBinding(
 				ctx.key.getText(),
@@ -267,7 +251,7 @@ public class ASTBuilder extends ujiFileBaseVisitor<ASTNode>  {
 		ujiFileParser.UjiMulCopyMulOptionContext ctx
 	) {
 		List<ASTNode> args = new ArrayList<>();
-		for (int i = 1; i < ctx.ujiMulRvalue().size(); i += 1) {
+		for (int i = 0; i < ctx.ujiMulRvalue().size(); i += 1) {
 			args.add(ctx.ujiMulRvalue(i).accept(this));
 		}
 		return new ASTCopy(

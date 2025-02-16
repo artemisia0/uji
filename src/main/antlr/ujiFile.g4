@@ -19,8 +19,12 @@ ujiOneRvalue
 	| ujiOneCopy # ujiOneRvalueOneCopyOption
 	| ujiOneBinding # ujiOneRvalueOneBindingOption ;
 
+ujiPrimaryBase
+	: ('<' rvalue=ujiOneRvalue '>') # ujiPrimaryBaseRvalueOption
+	| literal=ujiLiteral # ujiPrimaryBaseLiteralOption
+	| key=ID # ujiPrimaryBaseKeyOption ; 
 ujiPrimary
-	: (key=ID ':')? (('<' primaryRvalue=ujiOneRvalue '>') | primaryLiteral=ujiLiteral | primaryKey=ID) ('.' attrs+=ID)* packed='...'?;
+	: (key=ID ':')? ujiPrimaryBase ('.' attrs+=ID)* packed='...'?;
 
 ujiMulDef
 	: '/' ujiDefParams indent ujiMulRvalue (eols ujiMulBinding)* unindent # ujiMulDefMulOption
