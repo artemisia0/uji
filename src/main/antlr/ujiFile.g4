@@ -5,9 +5,9 @@ ujiFile
 	: (eols? ujiMulBinding eols?)* EOF;
 
 ujiMulBinding
-	: ID ':' ujiMulRvalue;
+	: ID COLON ujiMulRvalue;
 ujiOneBinding
-	: ID ':' ujiOneRvalue;
+	: ID COLON ujiOneRvalue;
 
 ujiMulRvalue
 	: ujiMulDef # ujiMulRvalueMulDefOption
@@ -20,23 +20,23 @@ ujiOneRvalue
 	| ujiOneBinding # ujiOneRvalueOneBindingOption ;
 
 ujiPrimaryBase
-	: ('<' rvalue=ujiOneRvalue '>') # ujiPrimaryBaseRvalueOption
+	: (LEFT_T_BRACE rvalue=ujiOneRvalue RIGHT_T_BRACE) # ujiPrimaryBaseRvalueOption
 	| literal=ujiLiteral # ujiPrimaryBaseLiteralOption
 	| key=ID # ujiPrimaryBaseKeyOption ; 
 ujiPrimary
-	: (key=ID ':')? ujiPrimaryBase ('.' attrs+=ID)* packed='...'?;
+	: (key=ID COLON)? ujiPrimaryBase (DOT attrs+=ID)* packed=THREE_DOTS?;
 
 ujiMulDef
-	: '/' ujiDefParams indent ujiMulRvalue (eols ujiMulBinding)* unindent # ujiMulDefMulOption
+	: SLASH ujiDefParams indent ujiMulRvalue (eols ujiMulBinding)* unindent # ujiMulDefMulOption
 	| ujiShortMulDef # ujiMulDefShortOption;
 ujiShortMulDef
-	: '/' ujiDefParams '/' ujiMulRvalue # ujiShortMulDefMulOption
+	: SLASH ujiDefParams SLASH ujiMulRvalue # ujiShortMulDefMulOption
 	| ujiOneDef # ujiShortMulDefOneOption;
 ujiOneDef
-	: '/' ujiDefParams '/' ujiOneRvalue;
+	: SLASH ujiDefParams SLASH ujiOneRvalue;
 
 ujiDefParams
-	: keys+=ID* ('...' packedKey=ID)? (bindingKeys+=ID ':' bindingObjects+=ujiPrimary)*;
+	: keys+=ID* (THREE_DOTS packedKey=ID)? (bindingKeys+=ID COLON bindingObjects+=ujiPrimary)*;
 
 ujiMulCopy
 	: ujiPrimary indent ujiMulRvalue (eols ujiMulRvalue)* unindent # ujiMulCopyMulOption
@@ -46,8 +46,8 @@ ujiOneCopy
 
 ujiLiteral: FMT_STRING | RAW_STRING | FLOAT | INT;
 
-indent: eols? '{' eols?;
-unindent: eols? '}' eols?;
+indent: eols? INDENT_CHAR eols?;
+unindent: eols? UNINDENT_CHAR eols?;
 
 eols: EOL+;
 ////////////////////////////////////////
@@ -62,6 +62,14 @@ EOL: '\r'? '\n';
 ID: [a-zA-Z_][a-zA-Z_0-9]*;
 WS: [ \t]+ -> skip;  // But keep newlines
 COMMENT: ';' ~[\r\n]* -> skip;
+COLON: ':';
+LEFT_T_BRACE: '<';
+RIGHT_T_BRACE: '>';
+DOT: '.';
+THREE_DOTS: '...';
+SLASH: '/';
+INDENT_CHAR: '{';
+UNINDENT_CHAR: '}';
 /////////////////////////////////////////
 
 

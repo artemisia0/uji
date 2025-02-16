@@ -14,6 +14,8 @@ import com.uji.ast.ASTNode;
 import com.uji.misc.jsonvisualizer.JSONVisualizer;
 import picocli.CommandLine;
 import com.uji.argsproxy.ArgsProxy;
+import org.antlr.v4.runtime.Token;
+import java.util.List;
 
 
 public class Main {
@@ -48,8 +50,39 @@ public class Main {
 
 		CharStream inputStream = CharStreams.fromString(code);
 		ujiFileLexer lexer = new ujiFileLexer(inputStream);
-		// add an option to print lexemes
 		CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
+
+    if (argsProxy.printRawLexemes) {
+      commonTokenStream.fill();
+      List<Token> tokensList = commonTokenStream.getTokens();
+      for (Token token : tokensList) {
+        System.out.printf("Lexeme: %-10s | Type: %-10s | Line: %-2d | Column: %-2d%n", "`" + token.getText() + "`", ujiFileLexer.VOCABULARY.getSymbolicName(token.getType()), token.getLine(), token.getCharPositionInLine());
+      }
+			System.exit(0);
+    }
+
+    if (argsProxy.printLexemes) {
+      List<String> namesToOmit = List.of("EOL", "EOF");
+
+      commonTokenStream.fill();
+      List<Token> tokensList = commonTokenStream.getTokens();
+      for (Token token : tokensList) {
+        String name = ujiFileLexer.VOCABULARY.getSymbolicName(token.getType());
+        if (name == null || namesToOmit.contains(name)) {
+          continue;
+        }
+        if (name == "INDENT_CHAR") {
+          System.out.println("Lexeme: INDENT");
+          continue;
+        } else if (name == "UNINDENT_CHAR") {
+          System.out.println("Lexeme: UNINDENT");
+          continue;
+        }
+        System.out.printf("Lexeme: %-10s | Type: %-10s | Line: %-2d | Column: %-2d%n", token.getText(), name, token.getLine(), token.getCharPositionInLine());
+      }
+			System.exit(0);
+    }
+
 		// add an option to visuzlise parse tree
 		ujiFileParser parser = new ujiFileParser(commonTokenStream);
 
@@ -58,11 +91,13 @@ public class Main {
 		if (argsProxy.printAST) {
 			String jsonRoot = new JSONFromAST(astRoot).value();
 			System.out.println(jsonRoot);
+			System.exit(0);
 		}
 
     if (argsProxy.visualizeAST) {
 			String jsonRoot = new JSONFromAST(astRoot).value();
       new JSONVisualizer(jsonRoot).visualize();
+			System.exit(0);
     }
 
 		// Add an option to print formatted ast also or something similar
