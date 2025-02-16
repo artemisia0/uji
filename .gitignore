@@ -2,5 +2,5 @@
 *.env.local
 antlr*jar
 src/main/java/com/uji/antlr/*
-target
+target/
 
