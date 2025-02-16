@@ -1,2 +1,4 @@
-_://print'Hello, uji!'
+_:/
+	print
+		'Hello, UJI!'
 

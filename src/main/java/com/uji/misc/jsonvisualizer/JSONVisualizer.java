@@ -50,6 +50,13 @@ public class JSONVisualizer {
 
         // Create a JTree from the DefaultMutableTreeNode
         JTree tree = new JTree(root);
+
+				// 									NODES EXPANSION
+		
+				tree.setRootVisible(true);  // ensure root is visible
+				tree.setShowsRootHandles(true);
+				expandAllNodes(tree, 0, tree.getRowCount());
+
         JScrollPane scrollPane = new JScrollPane(tree);
 
         // Set up the JFrame to show the JTree
@@ -59,6 +66,16 @@ public class JSONVisualizer {
         frame.setSize(500, 500);
         frame.setVisible(true);
     }
+
+		// Helper method to expand all nodes in JTree
+		private static void expandAllNodes(JTree tree, int startingIndex, int rowCount) {
+				for (int i = startingIndex; i < rowCount; i++) {
+						tree.expandRow(i);
+				}
+				if (tree.getRowCount() != rowCount) {
+						expandAllNodes(tree, rowCount, tree.getRowCount());
+				}
+		}
 
     // Helper method to build the tree recursively
     private static void buildTree(DefaultMutableTreeNode parentNode, JsonNode node) {
