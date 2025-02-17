@@ -7,3 +7,20 @@ and her e
 ? and this
     ';He\;llo,";" UJI!;'; and this
 ;and this
+
+_://print 'hi' ; printing 'hi'
+
+_:/
+  print
+    sum
+      a
+
+      b
+
+      mul
+
+        5
+
+        "something"
+    ok
+
