@@ -1,4 +1,9 @@
-_:/
-  print
-    'Hello, UJI!'
-
+_:/;onelinecomment
+  print                           ; this one is oneline also
+? multiline comment
+still
+and her e
+    adfka ;hello hi
+? and this
+    ';He\;llo,";" UJI!;'; and this
+;and this

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 // Removed multiline comments
 public class PreprocessedCode {
-	private final List<String> inputLines;
+	public final List<String> inputLines;
 
 	public PreprocessedCode(List<String> lines) {
 		this.inputLines = lines;
@@ -21,7 +21,11 @@ public class PreprocessedCode {
 		this.inputLines = List.of();
 	}
 
-	public List<String> lines() {
+	public List<String> value() {
+    List<String> lines = new CodeWithoutOnelineComments(inputLines).value();
+    return lines;
+
+    /*
 		int indentLevel = 0;  // Number of spaces that non-empty line starts with.
 		List<Integer> stack = new ArrayList<>(List.of());
 		List<String> lines = new ArrayList<>(List.of());
@@ -65,6 +69,7 @@ public class PreprocessedCode {
 		}
 		lines.add("");
 		return lines;
+    */
 	}
 
 	// number of spaces line starts with.

@@ -13,7 +13,7 @@ public class PreprocessedCodeAsString {
 
 	public String value() {
 		List<String> inputLines = Arrays.asList(input.split("\\R"));
-		List<String> lines = new PreprocessedCode(inputLines).lines();
+		List<String> lines = new PreprocessedCode(inputLines).value();
 		return String.join("\n", lines);
 	}
 }
