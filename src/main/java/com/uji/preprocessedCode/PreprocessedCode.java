@@ -22,10 +22,13 @@ public class PreprocessedCode {
 	}
 
 	public List<String> value() {
-    List<String> lines = new CodeWithoutOnelineComments(inputLines).value();
-    return lines;
+    return new CodeWithoutOnelineComments(
+      new CodeWithoutMultilineComments(
+        inputLines
+      ).value()
+    ).value();
 
-    /*
+    /*        OLD (STUPID) VERSION OF PREPROCESSOR, JUST REMOVE IT
 		int indentLevel = 0;  // Number of spaces that non-empty line starts with.
 		List<Integer> stack = new ArrayList<>(List.of());
 		List<String> lines = new ArrayList<>(List.of());
@@ -78,6 +81,8 @@ public class PreprocessedCode {
 	int indentOfLine(String line) {
 		int level = 0;
 		for (int i = 0; i < line.length(); i += 1) {
+      // In current version of preprocessor it is impossible for line
+      // to contain comment only because comments are removed...
 			if (line.charAt(i) == ';') {  // Whole line contains comment only.
 				return -1;
 			}
