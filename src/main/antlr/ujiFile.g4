@@ -4,6 +4,9 @@ grammar ujiFile;
 ujiFile
 	: (eols? ujiMulBinding eols?)* EOF;
 
+// I write COLON and not ':' for lexer to produce COLON tokens.
+// If I wrote ':' then lexer would not recognize ':' as operator or so
+// (but yeah, parser would still do the job as well as now).
 ujiMulBinding
 	: ID COLON ujiMulRvalue;
 ujiOneBinding
@@ -46,30 +49,29 @@ ujiOneCopy
 
 ujiLiteral: FMT_STRING | RAW_STRING | FLOAT | INT;
 
-indent: eols? INDENT_CHAR eols?;
-unindent: eols? UNINDENT_CHAR eols?;
+indent: INDENT eols?;
+unindent: UNINDENT eols?;
 
 eols: EOL+;
 ////////////////////////////////////////
 
 
 //////////////////////////////////////// 		LEXER RULES
+INDENT: '__INDENT___';
+UNINDENT: '__UNINDENT___';
+FLOAT: [0-9]+ '.' [0-9]+;
 INT: [0-9]+;
 RAW_STRING: '\'' ('\\\'' | ~'\'')*? '\'';
 FMT_STRING: '"' ('\\"' | ~'"')*? '"';
-FLOAT: [0-9]+ '.' [0-9]+;
 EOL: '\r'? '\n';
-ID: [a-zA-Z_][a-zA-Z_0-9]*;
 WS: [ \t]+ -> skip;  // But keep newlines
-COMMENT: ';' ~[\r\n]* -> skip;
 COLON: ':';
 LEFT_T_BRACE: '<';
 RIGHT_T_BRACE: '>';
-DOT: '.';
 THREE_DOTS: '...';
+DOT: '.';
 SLASH: '/';
-INDENT_CHAR: '{';
-UNINDENT_CHAR: '}';
+ID: [a-zA-Z_][a-zA-Z_0-9]*;
 /////////////////////////////////////////
 
 

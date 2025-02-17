@@ -20,10 +20,7 @@ public class ArgsProxy implements Callable<Integer> {
 	@Option(names = "--preprocess", description = "Print preprocessed code and exit")
 	public boolean preprocess;
 
-  @Option(names = "--print-raw-lexemes", description = "Print all lexemes extracted from source code (might be unreadable, prefer using --print-lexemes) and exit")
-  public boolean printRawLexemes;
-
-  @Option(names = "--print-lexemes", description = "Print pretty lexemes extracted from source code (some lexemes omitted for the sake of readability) and exit")
+  @Option(names = "--print-lexemes", description = "Print lexemes extracted from source code and exit")
   public boolean printLexemes;
 
 	@Override public Integer call() {

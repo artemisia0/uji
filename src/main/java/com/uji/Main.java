@@ -40,7 +40,7 @@ public class Main {
 			System.exit(0);
 		}
 
-		String code = new String(Files.readAllBytes(Paths.get(args[0])));
+		String code = new String(Files.readAllBytes(Paths.get(argsProxy.sourceFiles.get(0))));
 		code = new PreprocessedCodeAsString(code).value();
 
 		if (argsProxy.preprocess) {
@@ -52,38 +52,31 @@ public class Main {
 		ujiFileLexer lexer = new ujiFileLexer(inputStream);
 		CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
 
-    if (argsProxy.printRawLexemes) {
-      commonTokenStream.fill();
-      List<Token> tokensList = commonTokenStream.getTokens();
-      for (Token token : tokensList) {
-        System.out.printf("Lexeme: %-10s | Type: %-10s | Line: %-2d | Column: %-2d%n", "`" + token.getText() + "`", ujiFileLexer.VOCABULARY.getSymbolicName(token.getType()), token.getLine(), token.getCharPositionInLine());
-      }
-			System.exit(0);
-    }
-
     if (argsProxy.printLexemes) {
-      List<String> namesToOmit = List.of("EOL", "EOF");
-
       commonTokenStream.fill();
       List<Token> tokensList = commonTokenStream.getTokens();
+      String format = "%-16s %-2s:%-6s %-20s%n";
+      System.out.printf("-------------------------------------------------%n");
+      System.out.printf("%-16s %-2s:%-2s %-16s%n",
+        "LEXEME_TYPE", "LINE", "COLUMN", "LEXEME_TEXT");
+      System.out.printf("-------------------------------------------------%n");
       for (Token token : tokensList) {
         String name = ujiFileLexer.VOCABULARY.getSymbolicName(token.getType());
-        if (name == null || namesToOmit.contains(name)) {
+        int col = token.getCharPositionInLine();
+        int line = token.getLine();
+        String text = token.getText();
+        if (name.equals("EOL")) {
+          System.out.printf(format,
+            name, line, col, "\\n");
           continue;
         }
-        if (name == "INDENT_CHAR") {
-          System.out.println("Lexeme: INDENT");
-          continue;
-        } else if (name == "UNINDENT_CHAR") {
-          System.out.println("Lexeme: UNINDENT");
-          continue;
-        }
-        System.out.printf("Lexeme: %-10s | Type: %-10s | Line: %-2d | Column: %-2d%n", token.getText(), name, token.getLine(), token.getCharPositionInLine());
+        System.out.printf(format,
+          name, line, col, text);
       }
 			System.exit(0);
     }
 
-		// add an option to visuzlise parse tree
+		// add an option to visualize parse tree
 		ujiFileParser parser = new ujiFileParser(commonTokenStream);
 
 		ASTNode astRoot = new ASTBuilder().visitUjiFile(parser.ujiFile());
@@ -96,13 +89,13 @@ public class Main {
 
     if (argsProxy.visualizeAST) {
 			String jsonRoot = new JSONFromAST(astRoot).value();
-      new JSONVisualizer(jsonRoot).visualize();
-			System.exit(0);
+      var v = new JSONVisualizer(jsonRoot);
+      v.visualize();
+      // System.exit(0) just closes window immediately...
+    } else {
+      // Add an option to print formatted ast also or something similar
+      // Interpreting logic and so on...
     }
-
-		// Add an option to print formatted ast also or something similar
-
-		// Interpreting logic and so on...
 	}
 }
 
