@@ -1,26 +1,82 @@
-_:/;onelinecomment
-  print                           ; this one is oneline also
-? multiline comment
-still
-and her e
-    adfka ;hello hi
-? and this
-    ';He\;llo,";" UJI!;'; and this
-;and this
+_: /
+  print <self.someValue intValue:23>
+  someValue: /intValue
 
-_://print 'hi' ; printing 'hi'
+print: /...params
+  stdout.write
+    fmt params...
 
-_:/
-  print
-    sum
-      a
+? Suggestion: everything is an object and object has a scope.
+  Program is an object and has scope and special child that is in scope also.
+  Def     is an object and has scope and special child that is in scope also.
+  Copy    is an object and has scope and special child that is in scope also.
+  Copy is an interesting case. Copy is an object that is being copied
+  and a set of bindings that are "virtually" added to object's
+  (that is being copied) def scope. To construct copy's scope, def of an object
+  to be copied is required (basically, set of paramters would be enough).
+  Okay, it is possible to bind object that is being copied to '_' that is
+  to treat it maybe as a special child or so (but it's not obviously)...
+  CONCLUSION: copy also might be represented as just a plain scope.
+  Now we can represent program, def, copy with a class Object that has
+  a scope only (one single field). We can also differenciate between
+  all these types with '_type' scope key binded to "def" or "copy" where
+  program is a "def" also.
 
-      b
+  How about everything else that's left?
+  What exactly? 
+  And what are other types of objects if they exist at all?
 
-      mul
+  Binding? Yes, it is an object. Its scope has "_type"="binding"
+  and "_name"="" (undefined or so) and "key"=$key and "object"=$object
+  where key is binding key and object is an object to be binded.
 
-        5
+  How about representing values like string/int/float?
+  Well, cause they also have a scope (cause have attrs!).
+  Or maybe not because why having scope that takes so much memory for
+  every single literal.
 
-        "something"
-    ok
+  Example: what is 17? 17 is just a shortcut for <int 17>.
+  What is <int 17>? It is a copy of `int` object with `intValue`:17
+?  where `intValue` is a parameter of `int` object def.
+?
+  possible int def:
+  int: /intValue
+    intValue
+    sqrt: /
+      ; TODO
+    ; and so on
+
+  So now we can represent int value as a copy of int object with 
+  intValue set to 17 or whatever. So it is a copy.
+  But how would be actually represented that 17 that is being passes to int
+  as an argument I mean how this argument is represented?
+  One of the ways is to have a possibility of an object to represent 
+?  int value (or any other) also. See this abstract java code:
+?
+package com.uji.object;
+interface BasicObject {  // Means that every object might be evaluated.
+  BasicObject acceptEvaluator(Evaluator e);
+}
+
+import com.uji.eval.Evaluator;  // Evaluator basically is an interpreter.
+// Represents Def, Copy, Binding.
+class ObjectWithScope implements BasicObject {
+  BasicObject acceptEvaluator(Evaluator e) {
+    e.visit(this);  // Or maybe e.visitObjectWithScope but overloading is cool
+  }
+
+  public HashMap<String, BasicObject> scope;  // Maybe final but maybe not
+
+  // maybe some methods that are about scope manipulation but maybe not
+}
+
+// Represents all literals
+class IntObject impl... {
+  // accept visitor
+  BigInteger value;
+}
+class StringObject...
+class FloatObject...
+
+?
 

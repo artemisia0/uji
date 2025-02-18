@@ -35,24 +35,22 @@ public class Main {
 			System.exit(0);
 		}
 
-		if (argsProxy.sourceFiles.size() > 1) {
-			System.err.println("WARNING: processing of multiple source files is not supported yet.");
-			System.exit(0);
-		}
-
-		String code = new String(Files.readAllBytes(Paths.get(argsProxy.sourceFiles.get(0))));
+		String code = new String(
+      Files.readAllBytes(
+        Paths.get(
+          argsProxy.sourceFiles.get(0)
+        )
+      )
+    );
 		code = new PreprocessedCodeAsString(code).value();
 
 		if (argsProxy.preprocess) {
 			System.out.println(code);
-			System.exit(0);
-		}
+		} else if (argsProxy.printLexemes) {
+      CharStream inputStream = CharStreams.fromString(code);
+      ujiFileLexer lexer = new ujiFileLexer(inputStream);
+      CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
 
-		CharStream inputStream = CharStreams.fromString(code);
-		ujiFileLexer lexer = new ujiFileLexer(inputStream);
-		CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
-
-    if (argsProxy.printLexemes) {
       commonTokenStream.fill();
       List<Token> tokensList = commonTokenStream.getTokens();
       String format = "%-16s %-2s:%-6s %-20s%n";
@@ -73,29 +71,28 @@ public class Main {
         System.out.printf(format,
           name, line, col, text);
       }
-			System.exit(0);
-    }
+    } else if (argsProxy.printAST) {
+      CharStream inputStream = CharStreams.fromString(code);
+      ujiFileLexer lexer = new ujiFileLexer(inputStream);
+      CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
 
-		// add an option to visualize parse tree
-		ujiFileParser parser = new ujiFileParser(commonTokenStream);
+      ujiFileParser parser = new ujiFileParser(commonTokenStream);
+      ASTNode astRoot = new ASTBuilder().visitUjiFile(parser.ujiFile());
 
-		ASTNode astRoot = new ASTBuilder().visitUjiFile(parser.ujiFile());
-
-		if (argsProxy.printAST) {
 			String jsonRoot = new JSONFromAST(astRoot).value();
 			System.out.println(jsonRoot);
-			System.exit(0);
-		}
+		} else if (argsProxy.visualizeAST) {
+      CharStream inputStream = CharStreams.fromString(code);
+      ujiFileLexer lexer = new ujiFileLexer(inputStream);
+      CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
 
-    if (argsProxy.visualizeAST) {
+      ujiFileParser parser = new ujiFileParser(commonTokenStream);
+      ASTNode astRoot = new ASTBuilder().visitUjiFile(parser.ujiFile());
+
 			String jsonRoot = new JSONFromAST(astRoot).value();
       var v = new JSONVisualizer(jsonRoot);
       v.visualize();
-      // System.exit(0) just closes window immediately...
-    } else {
-      // Add an option to print formatted ast also or something similar
-      // Interpreting logic and so on...
     }
-	}
+  }
 }
 
