@@ -2,6 +2,9 @@ package com.uji.ast;
 
 import java.util.List;
 
+import com.uji.eval.BaseObject;
+import com.uji.eval.Evaluator;
+
 
 public class ASTDef extends ASTNode {
 	public final ASTDefParams params;
@@ -19,5 +22,9 @@ public class ASTDef extends ASTNode {
 		specialChild = s;
 		childrenBindings = b;
 	}
+
+  @Override public BaseObject acceptEvaluator(Evaluator e) {
+    return e.visit(this);
+  }
 }
 

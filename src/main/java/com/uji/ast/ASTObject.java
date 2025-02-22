@@ -2,6 +2,9 @@ package com.uji.ast;
 
 import java.util.List;
 
+import com.uji.eval.BaseObject;
+import com.uji.eval.Evaluator;
+
 
 public class ASTObject extends ASTNode {
 	public final ASTNode baseObject;
@@ -14,5 +17,9 @@ public class ASTObject extends ASTNode {
 		attrs = a;
 		toBeUnpacked = u;
 	}
+
+  @Override public BaseObject acceptEvaluator(Evaluator e) {
+    return e.visit(this);
+  }
 }
 

@@ -2,6 +2,9 @@ package com.uji.ast;
 
 import java.util.List;
 
+import com.uji.eval.BaseObject;
+import com.uji.eval.Evaluator;
+
 
 public class ASTDefParams extends ASTNode {
 	public final List<String> keys;
@@ -19,5 +22,9 @@ public class ASTDefParams extends ASTNode {
 		packedKey = pk;
 		bindings = b;
 	}
+
+  @Override public BaseObject acceptEvaluator(Evaluator e) {
+    return e.visit(this);
+  }
 }
 

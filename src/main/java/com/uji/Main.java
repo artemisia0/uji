@@ -16,6 +16,8 @@ import picocli.CommandLine;
 import com.uji.argsproxy.ArgsProxy;
 import org.antlr.v4.runtime.Token;
 import java.util.List;
+import com.uji.eval.Evaluator;
+import com.uji.eval.BaseObject;
 
 
 public class Main {
@@ -92,6 +94,20 @@ public class Main {
 			String jsonRoot = new JSONFromAST(astRoot).value();
       var v = new JSONVisualizer(jsonRoot);
       v.visualize();
+    } else {  // Evaluate uji code
+      CharStream inputStream = CharStreams.fromString(code);
+      ujiFileLexer lexer = new ujiFileLexer(inputStream);
+      CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
+
+      ujiFileParser parser = new ujiFileParser(commonTokenStream);
+      ASTNode astRoot = new ASTBuilder().visitUjiFile(parser.ujiFile());
+
+      Evaluator evaluator = new Evaluator();
+      BaseObject obj = astRoot.acceptEvaluator(evaluator);
+      System.out.println(obj);
+      if (obj != null) {
+        System.out.println(obj.inspect());
+      }
     }
   }
 }

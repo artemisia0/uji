@@ -2,8 +2,12 @@ package com.uji.ast;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import com.uji.eval.BaseObject;
+import com.uji.eval.Evaluator;
+import com.uji.eval.EvaluatorAcceptor;
 
-public class ASTNode {
+
+public class ASTNode implements EvaluatorAcceptor {
 	@JsonIgnore
 	public final int firstLine;
 	@JsonIgnore
@@ -23,5 +27,9 @@ public class ASTNode {
 		firstChar = fc;
 		lastChar = lc;
 	}
+
+  @Override public BaseObject acceptEvaluator(Evaluator e) {
+    throw new Error("Calling ASTNode::acceptEvaluator");
+  }
 }
 
